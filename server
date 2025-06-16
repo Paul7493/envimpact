@@ -1,0 +1,19 @@
+async function getEnvironmentalImpactScore(description, manufacturingDetails, supplyChainInfo) {
+  try {
+    const response = await fetch('http://localhost:4000/api/impact-score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ description, manufacturingDetails, supplyChainInfo })
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(`Environmental Impact Score: ${data.score}`);
+    return data.score;
+  } catch (error) {
+    console.error('Error getting environmental impact score:', error);
+  }
+}
